@@ -1,0 +1,24 @@
+package es.iesquevedo.util;
+
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+
+public class LocalDateAdapter implements JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
+    @Override
+    public JsonElement serialize(LocalDate src, Type typeOfSrc, com.google.gson.JsonSerializationContext context) {
+        return new JsonPrimitive(src.toString());
+    }
+
+    @Override
+    public LocalDate deserialize(JsonElement json, Type typeOfT, com.google.gson.JsonDeserializationContext context) throws JsonParseException {
+        if (json == null || json.getAsString() == null || json.getAsString().isEmpty()) return null;
+        return LocalDate.parse(json.getAsString());
+    }
+}
+
