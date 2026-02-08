@@ -1,10 +1,23 @@
 package es.iesquevedo.app;
 
+import es.iesquevedo.dao.*;
+import es.iesquevedo.servicios.AlquilerService;
+import es.iesquevedo.servicios.AlquilerService_Implementacion;
+
 import java.util.Scanner;
 
 public class Main {
+    private static JsonPeliculaDao AlquilerService;
+
     public static void main(String[] args) {
-        ConsoleApp app = new ConsoleApp();
+        String base = System.getProperty("user.dir");
+        JsonPeliculaDao jsonPeliculaDao = new JsonPeliculaDao_Implementacion(base + "/peliculas_Test.json");
+        JsonSocioDao jsonSocioDao = new JsonSocioDao_Implementacion(base + "/socios_Test.json");
+        JsonAlquilerDao jsonAlquilerDao = new JsonAlquilerDao_Implementacion(base + "/alquileres_Test.json");
+        AlquilerService alquilerService = new AlquilerService_Implementacion( jsonPeliculaDao, jsonSocioDao, jsonAlquilerDao);
+
+
+        ConsoleApp app = new ConsoleApp(jsonPeliculaDao, jsonSocioDao, alquilerService);
 
         try (Scanner scanner = new Scanner(System.in)) {
             boolean running = true;
